@@ -164,4 +164,6 @@ cython_debug/
 *.bin
 *.gguf
 *.onnx
+
+#api
 vertexai-client.json

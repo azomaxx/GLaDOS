@@ -231,4 +231,36 @@ Companies supporting the development of GLaDOS:
 </div>
 
 ### Tool Integration
-- Volume Control. Control system volume by saying "volume up by 15" or "decrease volume by 11".
+
+GLaDOS now supports custom function calling for system control. Current tools include:
+
+#### Volume Control
+Control system volume through natural voice commands. GLaDOS automatically detects volume requests and executes them without requiring special syntax.
+
+**System Requirements:**
+```bash
+# For Ubuntu/Debian systems
+sudo apt update
+sudo apt install pulseaudio-utils  # Primary audio system
+sudo apt install alsa-utils       # Fallback audio system
+```
+
+**Supported Commands:**
+- "Volume down by 13 percent"
+- "Set volume to 50"
+- "Increase volume by 10"
+- "Make it quieter"
+- "Turn it up 25 percent"
+- "Volume up twenty"
+
+**How it Works:**
+1. GLaDOS detects volume control patterns in speech
+2. Converts spoken numbers ("thirteen" → 13)
+3. Executes system audio commands via PulseAudio/ALSA
+4. Responds with characteristic sarcastic confirmation
+
+**Technical Details:**
+- Uses PulseAudio first, ALSA as fallback
+- Supports both percentage and number formats
+- Handles compound numbers ("twenty one" → 21)
+- Bypasses LLM for direct execution (faster response)

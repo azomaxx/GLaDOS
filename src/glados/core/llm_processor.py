@@ -10,6 +10,9 @@ from loguru import logger
 from pydantic import HttpUrl  # If HttpUrl is used by config
 import requests
 
+# Import tools
+from ..tools import VolumeControlTool
+
 
 class LanguageModelProcessor:
     """
@@ -46,6 +49,86 @@ class LanguageModelProcessor:
         self.prompt_headers = {"Content-Type": "application/json"}
         if api_key:
             self.prompt_headers["Authorization"] = f"Bearer {api_key}"
+
+        # Initialize tools
+        self.volume_tool = VolumeControlTool()
+        self.tools = {
+            "volume": self.volume_tool
+        }
+
+    def _detect_tool_call(self, text: str) -> tuple[str, Any] | None:
+        """
+        Detect if the input text contains a tool call.
+        
+        Args:
+            text: Input text from user
+            
+        Returns:
+            Tuple of (tool_name, tool_instance) if tool detected, None otherwise
+        """
+        text_lower = text.lower()
+        
+        # Volume control patterns
+        volume_patterns = [
+            r"volume\s+(up|down|increase|decrease|raise|lower|set|adjust)",
+            r"(up|down|increase|decrease|raise|lower)\s+volume",
+            r"set\s+volume\s+to",
+            r"adjust\s+volume",
+            r"make\s+(it|volume)\s+(louder|quieter|softer|higher|lower)",
+            r"turn\s+(it|volume)\s+(up|down)",
+        ]
+        
+        for pattern in volume_patterns:
+            if re.search(pattern, text_lower):
+                return "volume", self.volume_tool
+        
+        return None
+
+    def _execute_tool(self, tool_name: str, tool: Any, command: str) -> dict[str, Any]:
+        """
+        Execute a tool command.
+        
+        Args:
+            tool_name: Name of the tool
+            tool: Tool instance
+            command: Original user command
+            
+        Returns:
+            Tool execution result
+        """
+        try:
+            logger.info(f"Executing tool '{tool_name}' with command: '{command}'")
+            result = tool.execute(command)
+            
+            if result.get("success"):
+                # Generate GLaDOS-style response for successful tool execution
+                if tool_name == "volume":
+                    action = "adjusted"
+                    if "set" in command.lower():
+                        action = "set"
+                    elif "up" in command.lower() or "increase" in command.lower():
+                        action = "increased"
+                    elif "down" in command.lower() or "decrease" in command.lower():
+                        action = "decreased"
+                    
+                    response = f"Volume {action} to {result.get('volume', 'unknown')}%. Another trivial task completed."
+                else:
+                    response = f"Tool '{tool_name}' executed successfully."
+                
+                logger.success(f"Tool execution successful: {response}")
+                return {"success": True, "response": response, "tool_result": result}
+            else:
+                # Error response
+                error_msg = result.get("error", "Unknown error")
+                response = f"Tool execution failed: {error_msg}. How disappointing."
+                logger.error(f"Tool execution failed: {error_msg}")
+                return {"success": False, "response": response, "tool_result": result}
+                
+        except Exception as e:
+            error_msg = f"Unexpected error executing tool: {e}"
+            logger.exception(error_msg)
+            response = "The tool malfunctioned. How utterly predictable."
+            return {"success": False, "response": response, "tool_result": {"error": str(e)}}
 
     def _clean_raw_bytes(self, line: bytes) -> dict[str, str] | None:
         """
@@ -140,6 +223,27 @@ class LanguageModelProcessor:
                     continue
 
                 logger.info(f"LLM Processor: Received text for LLM: '{detected_text}'")
+                
+                # Check for tool calls before sending to LLM
+                tool_call = self._detect_tool_call(detected_text)
+                if tool_call:
+                    tool_name, tool_instance = tool_call
+                    logger.info(f"Tool call detected: {tool_name}")
+                    
+                    # Execute tool and send response directly to TTS
+                    tool_result = self._execute_tool(tool_name, tool_instance, detected_text)
+                    response_text = tool_result["response"]
+                    
+                    # Add to conversation history
+                    self.conversation_history.append({"role": "user", "content": detected_text})
+                    self.conversation_history.append({"role": "assistant", "content": response_text})
+                    
+                    # Send response to TTS
+                    self.tts_input_queue.put(response_text)
+                    self.tts_input_queue.put("<EOS>")
+                    continue
+                
+                # No tool detected, proceed with normal LLM processing
                 self.conversation_history.append({"role": "user", "content": detected_text})
 
                 data = {

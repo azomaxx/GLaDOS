@@ -229,3 +229,6 @@ Companies supporting the development of GLaDOS:
 [Flow is built for devs who live in their tools. Speak and give more context, get better results.](https://ref.wisprflow.ai/qbHPGg8)
 
 </div>
+
+### Tool Integration
+- Volume Control. Control system volume by saying "volume up by 15" or "decrease volume by 11".

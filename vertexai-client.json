@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "glados-483715",
+  "private_key_id": "e490a78473f16d607b33169820481cf40ba0021a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDVfW16pM7K7zWd\noBgFd/2TRxGFrQOcW52qAsZ/tAzuJIk84Nr6TbclfkzIDSWlME5qlhKSklOLlJky\nN9ty+EG2WuvXIX8GfNJbs8BIiI9CK2A8sApAL5L5qHSgEDKDC1tnMeUologe4ai8\ncaOAEqJtVUoDsyvcrdkUCGAjkbGesBM+/HwnmXswPWN8k7tx0rWje8e/+aLiNRHc\n5O/dngDVF7cwczm+zUZ+h9HjR47PjFeQB6XELheWwz54q2jf9gb4n0F/8bS7+QSy\nKDj7PYG1AZBOuAc/rT0FCcD+lbY38x3vDP/pXzsWH2eFlU7TkL2zpJHMpLBabJKP\nGIgZwOePAgMBAAECggEAI5eLnvzG9RI4UBUWrCK7Bci9ZRnZFkI34NYhnby4wyMY\nNiwOldhLBlcuGdQHSKjrCd4HLqRyhTy65aJmVZ6J5gr2cqFE+iHpOByZm/4YVCHD\nI5r9uoGz8SdieiT5JtvH20Z4O/IMs4lPhkszxPBWX//uHPvL/jiFjk9vJ77sa9YE\n9ZqFev45fsl4fMiMK058vSDFn1mPKPH/8SIz4eEnztZi9dxuGW/adItCWza6JrFA\noA5y+3OF7wvZRJ9uJLeu3WMGg4UKRap/iBKQtQIDUlXKWhU0w8Nbi0F397isI1J3\nxDaTt7V6j2blAu1x6H+ylqY94u3h91+z8XjhXIxw4QKBgQD1IItq6CIaNj6z7DI0\nEBwrBZhnYaa8rZZ4q3aGD0Wqp4ILAYm+2rqAVk/BwKFqlpptxdsWxKcw0tVK2uAp\nrVludgIeBZftTPDr1UGkimwXz/HCk1oHP4Am8sfSc6XaoJHX8gjY9FsqZy2BIHbn\no9qKXaB7bgw+zQ+EG69vpBTUWQKBgQDe9aNe0FHU+tzSkB9W1mF8/ULcZ+cPklxR\nDERy/SJ0Q0bPjqmoHVaVgaLKZUJv0oV+WrbR9uSLI6vG5nVhTw9qC9MT3EzNsk44\nMwdFNZG45M0m0Sry52JKEoPWDbXM+I4L9XaubLeJDEHhqo49b0+Y1AFDYA23BGW9\n3qfGj38+JwKBgDe0Ppp7yAwm2ZbvjPUR2CTar6iGo2prFC+130hVviIq0L2JivDp\nKcqyUouYJ9ZeBRf/B2ukIs5QixHorVorP5B/lrmV0dGmU3V0T+eBYVED+0+ZRrMw\n9gFj2I71ovIM3Teyk9ohpXn8WnXml77KGIarAiYqevPmi6kc1YBMTEN5AoGAN0UB\nKKHPh1Jgpzne6vHd3NQTXPvMxYlspRK7bR3fCp8a0Jz25ZvQOOOX7UBIxduUCAyI\nwWfIo81F6dp7QpIMqicgPg4gY+VNipTrunZbF1Bwoqy7TteY/++zCr7/UD5VSBWj\nQ/3jSW/mbQCQnh4XxzTW01LeU34dkoG9aXVs/4UCgYEAhcgU/R8H4/cRAZ4ESHTB\nVVLyqaQp0ncSe+rI2kQoddRVbXGRkUNxxmo08d63/wLSQCmmqksHWU6FFLOTuS7v\nJbSZsQbMnJW5zSZcUgDHq2Yuzty2nKYqKSyU0FvJXzidSrzLRM+ZRZcXbrvbDNNN\nBcNKni1lzkeettaDdkKKG78=\n-----END PRIVATE KEY-----\n",
+  "client_email": "vertexai-gemini-client@glados-483715.iam.gserviceaccount.com",
+  "client_id": "101225464184994983915",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vertexai-gemini-client%40glados-483715.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

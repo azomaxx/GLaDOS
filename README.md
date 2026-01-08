@@ -253,14 +253,42 @@ sudo apt install alsa-utils       # Fallback audio system
 - "Turn it up 25 percent"
 - "Volume up twenty"
 
+#### Web Search
+Search the web for real-time information using Google Vertex AI with Google Search integration.
+
+**System Requirements:**
+```bash
+# Google Vertex AI setup required:
+# 1. Create Google Cloud project
+# 2. Enable Vertex AI API
+# 3. Create service account with Cloud Platform permissions
+# 4. Download service account JSON file
+# 5. Set environment variables or place file as 'vertexai-client.json'
+```
+
+**Environment Variables:**
+```bash
+export VERTEXAI_SERVICE_ACCOUNT_FILE="vertexai-client.json"  
+export VERTEXAI_PROJECT="your-gcp-project-id"                
+export VERTEXAI_LOCATION="us-central1"                       
+```
+
+**Supported Commands:**
+- "Search the web for weather in Tokyo Japan tomorrow"
+- "Search web for NBA scores Mavericks vs Lakers"
+- "Search for hot topics in stock market"
+- "Web search latest news about AI"
+- "Google search Python programming tutorials"
+
 **How it Works:**
-1. GLaDOS detects volume control patterns in speech
-2. Converts spoken numbers ("thirteen" → 13)
-3. Executes system audio commands via PulseAudio/ALSA
-4. Responds with characteristic sarcastic confirmation
+1. GLaDOS detects search patterns in speech
+2. Extracts query after "search the web for" or similar phrases
+3. Sends query to Google Vertex AI with Google Search tool
+4. Returns concise, factual responses with GLaDOS's personality
+5. Optimized for maximum 100 words per response
 
 **Technical Details:**
-- Uses PulseAudio first, ALSA as fallback
-- Supports both percentage and number formats
-- Handles compound numbers ("twenty one" → 21)
+- Uses Google Gemini 2.5 Flash model
+- Grounded responses with real-time web data
+- Automatic query extraction from natural language
 - Bypasses LLM for direct execution (faster response)

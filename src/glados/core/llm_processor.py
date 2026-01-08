@@ -11,7 +11,7 @@ from pydantic import HttpUrl  # If HttpUrl is used by config
 import requests
 
 # Import tools
-from ..tools import VolumeControlTool
+from ..tools import VolumeControlTool, WebSearchTool
 
 
 class LanguageModelProcessor:
@@ -52,8 +52,10 @@ class LanguageModelProcessor:
 
         # Initialize tools
         self.volume_tool = VolumeControlTool()
+        self.web_search_tool = WebSearchTool()
         self.tools = {
-            "volume": self.volume_tool
+            "volume": self.volume_tool,
+            "web_search": self.web_search_tool
         }
 
     def _detect_tool_call(self, text: str) -> tuple[str, Any] | None:
@@ -78,9 +80,24 @@ class LanguageModelProcessor:
             r"turn\s+(it|volume)\s+(up|down)",
         ]
         
+        # Web search patterns
+        search_patterns = [
+            r"search\s+the\s+web\s+for",
+            r"search\s+web\s+for",
+            r"search\s+for",
+            r"web\s+search",
+            r"google\s+search",
+        ]
+        
+        # Check volume patterns first (more specific)
         for pattern in volume_patterns:
             if re.search(pattern, text_lower):
                 return "volume", self.volume_tool
+        
+        # Check search patterns
+        for pattern in search_patterns:
+            if re.search(pattern, text_lower):
+                return "web_search", self.web_search_tool
         
         return None
 
@@ -112,6 +129,9 @@ class LanguageModelProcessor:
                         action = "decreased"
                     
                     response = f"Volume {action} to {result.get('volume', 'unknown')}%. Another trivial task completed."
+                elif tool_name == "web_search":
+                    # For web search, use the actual search response
+                    response = result.get('response', "Search completed but no results found.")
                 else:
                     response = f"Tool '{tool_name}' executed successfully."
                 

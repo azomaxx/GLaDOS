@@ -266,7 +266,7 @@ Search the web for real-time information using Google Vertex AI with Google Sear
 # 5. Set environment variables or place file as 'vertexai-client.json'
 ```
 
-**Environment Variables:**
+**Optional Environment Variables:**
 ```bash
 export VERTEXAI_SERVICE_ACCOUNT_FILE="vertexai-client.json"  
 export VERTEXAI_PROJECT="your-gcp-project-id"                
